@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignupPage() {
   const [username, setUsername] = useState("");
@@ -7,7 +8,22 @@ function SignupPage() {
 
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {};
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.post("http://localhost:8080/api/auth/signup", {
+        username,
+        password,
+      });
+
+      alert("회원가입 성공");
+
+      navigate("/login");
+    } catch (err) {
+      alert("회원가입 실패 : " + (err.response?.data || err.message));
+    }
+  };
 
   return (
     <div className="auth-container">
