@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -18,7 +19,12 @@ function LoginPage() {
         { withCredentials: true }
       );
 
-      alert("로그인 성공! Access Token : " + res.data.accessToken);
+      Cookies.set("accessToken", res.data.accessToken);
+
+      alert("로그인 성공! Access Token : " + res.data.accessToken, {
+        expires: 0.021,
+        path: "/",
+      });
 
       navigate("/");
     } catch (err) {
