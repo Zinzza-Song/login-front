@@ -1,10 +1,31 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import Cookies from "js-cookie";
+
+import axiosInstance from "../api/axiosInstance";
+import { logout } from "../store/userSlice";
 
 const Navbar = () => {
   const location = useLocation();
   const { role, isAuthenticated } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post("/api/auth/logout");
+    } catch (err) {
+      console.error("서버 로그아웃 실패 : ", err);
+    }
+
+    Cookies.remove("accessToken");
+
+    dispatch(logout());
+
+    navigate("/");
+  };
 
   return (
     <nav className="navbar">
@@ -24,6 +45,7 @@ const Navbar = () => {
                 관리자
               </Link>
             )}
+            <Link onClick={handleLogout}>로그아웃</Link>
           </>
         ) : (
           <>
