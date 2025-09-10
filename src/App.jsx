@@ -11,6 +11,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import Navbar from "./components/Navbar";
+import OAuthRedirectKakaoPage from "./pages/OAuthRedirectPage";
 
 import { setUserFromToken } from "./store/userSlice";
 
@@ -36,6 +37,10 @@ function App() {
           <Route path="signup" element={<SignupPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="admin" element={<AdminPage />} />
+          <Route
+            path="/oauth2/redirect/kakao"
+            element={<OAuthRedirectKakaoPage />}
+          />
         </Routes>
       </div>
     </Router>
